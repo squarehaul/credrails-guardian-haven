@@ -45,6 +45,7 @@ function App() {
             <Route index element={<CreateCompany />} />
             <Route path="create-company" element={<CreateCompany />} />
             <Route path="company-report" element={<CompanyReport />} />
+            <Route path="client/:clientId" element={<ClientProfile />} />
           </Route>
 
           {/* Company Routes */}

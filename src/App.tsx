@@ -6,7 +6,6 @@ import Login from "./pages/Login";
 import { AdminLayout } from "./components/admin/AdminLayout";
 import CreateCompany from "./pages/admin/CreateCompany";
 import CompanyReport from "./pages/admin/CompanyReport";
-import AdminClientProfile from "./pages/admin/ClientProfile";
 import CompanyLogin from "./pages/CompanyLogin";
 import CompanyAbout from "./pages/CompanyAbout";
 import ClientDashboard from "./pages/company/ClientDashboard";
@@ -41,15 +40,14 @@ function App() {
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
           
-          {/* Admin Routes */}
-          <Route path="/:companyUsername/admin" element={<AdminLayout />}>
+          {/* System Admin Routes */}
+          <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<CreateCompany />} />
             <Route path="create-company" element={<CreateCompany />} />
             <Route path="company-report" element={<CompanyReport />} />
-            <Route path="client/:clientId" element={<AdminClientProfile />} />
-            <Route path="loan/:loanId" element={<ActiveLoanProfile />} />
           </Route>
 
+          {/* Company Routes */}
           <Route path="/:companyUsername">
             <Route index element={<CompanyLogin />} />
             <Route path="about" element={<CompanyAbout />} />

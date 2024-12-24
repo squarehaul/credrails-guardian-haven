@@ -2,17 +2,13 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { ClientProfile as ClientProfileComponent } from "@/components/client/ClientProfile";
-import { CompanyDashboardLayout } from "@/components/company/CompanyDashboardLayout";
 import { toast } from "sonner";
-import { UserRole, isValidUserRole } from "@/types/auth";
 
-export default function ClientProfile() {
+export default function ClientProfilePage() {
   const { clientId } = useParams();
-  const storedRole = localStorage.getItem("userRole") || "admin";
-  const userRole: UserRole = isValidUserRole(storedRole) ? storedRole : "admin";
 
   const { data: client, isLoading } = useQuery({
-    queryKey: ['client', clientId],
+    queryKey: ['client-profile', clientId],
     queryFn: async () => {
       console.log('Fetching client data for ID:', clientId);
       
@@ -21,11 +17,11 @@ export default function ClientProfile() {
         .select(`
           *,
           loans (
-            *
+            *,
+            interest (*),
+            loan_tenor (*)
           ),
-          client_next_of_kin (
-            *
-          )
+          client_next_of_kin (*)
         `)
         .eq('id', clientId)
         .single();
@@ -41,32 +37,20 @@ export default function ClientProfile() {
     }
   });
 
-  if (isLoading) {
-    return (
-      <CompanyDashboardLayout userRole={userRole}>
-        <div className="p-6">
-          <div>Loading client profile...</div>
-        </div>
-      </CompanyDashboardLayout>
-    );
-  }
-
-  if (!client) {
-    return (
-      <CompanyDashboardLayout userRole={userRole}>
-        <div className="p-6">
-          <div>Client not found</div>
-        </div>
-      </CompanyDashboardLayout>
-    );
-  }
-
-  return (
-    <CompanyDashboardLayout userRole={userRole}>
-      <div className="p-6">
-        <h1 className="text-2xl font-bold mb-6">Client Profile</h1>
-        <ClientProfileComponent client={client} />
-      </div>
-    </CompanyDashboardLayout>
+  const content = isLoading ? (
+    <div className="p-6">
+      <div>Loading client profile...</div>
+    </div>
+  ) : !client ? (
+    <div className="p-6">
+      <div>Client not found</div>
+    </div>
+  ) : (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-6">Client Profile</h1>
+      <ClientProfileComponent client={client} />
+    </div>
   );
+
+  return content;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from "@/integrations/supabase/client";
 
-const CompanyGrid = () => {
+const CompanyGrid: React.FC = () => {
   const navigate = useNavigate();
   console.log('Fetching companies data');
 

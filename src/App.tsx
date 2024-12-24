@@ -40,12 +40,11 @@ function App() {
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
           
-          {/* System Admin Routes */}
+          {/* System Owner Routes */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<CreateCompany />} />
             <Route path="create-company" element={<CreateCompany />} />
             <Route path="company-report" element={<CompanyReport />} />
-            <Route path="client/:clientId" element={<ClientProfile />} />
           </Route>
 
           {/* Company Routes */}

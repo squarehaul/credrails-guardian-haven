@@ -21,7 +21,7 @@ export function RecentClientsList({ clients }: RecentClientsListProps) {
   const handleViewClient = (clientId: number) => {
     console.log('Viewing client:', clientId);
     // Get the current path and add /client/{id} to it
-    const basePath = location.pathname.split('/').slice(0, -1).join('/');
+    const basePath = location.pathname;
     navigate(`${basePath}/client/${clientId}`);
   };
 
